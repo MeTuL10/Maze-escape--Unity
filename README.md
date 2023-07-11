@@ -1,6 +1,6 @@
 # Maze-escape--Unity
 
-The game is designed using unity. The repository contains the C# scripts needed to control the player camera, the bots' movement and the game completion completion criteria.
+The game is designed using unity. The repository contains the C# scripts needed to control the player camera, the bots' movement and the game completion completion criteria.  
 The game objects that have been designed for the game are-
 * Maze- created using pro-builder tool​
 * Enemy agents – using navmesh and programming​
