@@ -16,11 +16,14 @@ public class enemyfollow : MonoBehaviour
     private double distance;
     public string str;
     public Text text;
-    public Transform textobj;
+    public GameObject t1;
+    public GameObject t2;
     // Start is called before the first frame update
     void Start()
     {
         startpos=transform.position;
+        t1.SetActive(false);
+        t2.SetActive(false);
         //textobj.gameObject..SetActive(false);
     }
 
@@ -39,7 +42,7 @@ public class enemyfollow : MonoBehaviour
             if (dpz<30){
                 sightrange=40;
                 enemy.speed=4;
-                enemy.obstacleAvoidanceType = ObstacleAvoidanceType.HighQualityObstacleAvoidance;
+                enemy.obstacleAvoidanceType = ObstacleAvoidanceType.GoodQualityObstacleAvoidance;
             }
             else if (dpz<45){
                 sightrange=30;
@@ -50,7 +53,7 @@ public class enemyfollow : MonoBehaviour
             {
                 sightrange=60;
                 enemy.speed=5;
-                enemy.obstacleAvoidanceType = ObstacleAvoidanceType.MedQualityObstacleAvoidance;
+                enemy.obstacleAvoidanceType = ObstacleAvoidanceType.HighQualityObstacleAvoidance;
             }
             //playerinrange=Physics.CheckSphere(player.position,sightrange,whatisplayer);
             rb=gameObject.GetComponent<Rigidbody>();
@@ -60,7 +63,7 @@ public class enemyfollow : MonoBehaviour
                 float pz=player.position.z;
                 if(ez<20 && pz<30)
                     enemy.SetDestination(player.position);
-                else if(ez<45 && pz>20 && pz<45)
+                else if(ez<40 && pz>20 && pz<45)
                     enemy.SetDestination(player.position);
                 else if (ez>40 && pz>40)
                     enemy.SetDestination(player.position);
@@ -75,18 +78,24 @@ public class enemyfollow : MonoBehaviour
                 //this.rb.angularVelocity = Vector3.zero;
             }
             if (player.position.z>66) //if player reached the exit, detroying the enemy's object
-                //str="YOU WIN :)";
-                //gameObject.active = true;
+            {
+                str="YOU WIN :)";
+                //textobj.Text=str;
+                t1.SetActive(true);
                 Destroy(this.gameObject);
+                Destroy(player.gameObject);
+            }
         }
-        //else
-        //    enemy.SetDestination(vector3(-1,enemy.position.y,-16));
+        else
+            Destroy(this.gameObject);
     }
     private void OnCollisionEnter(Collision other) {
         if (other.gameObject.CompareTag("Player"))
         {
-            //str="YOU LOSE :(";
-            //textobj.gameObject.active = true;          
+            str="YOU LOSE :(";
+            //textobj.Text=str;
+            Destroy(this.gameObject);
+            t2.SetActive(true);         
             Destroy(other.gameObject);
         }
     }
